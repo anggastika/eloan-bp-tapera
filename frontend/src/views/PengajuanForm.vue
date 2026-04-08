@@ -190,7 +190,11 @@ export default {
       this.success = '';
       this.loading = true;
       try {
-        const { data } = await api.post('/pengajuan', this.form);
+        const payload = {};
+        for (const [key, value] of Object.entries(this.form)) {
+          payload[key] = value === '' ? null : value;
+        }
+        const { data } = await api.post('/pengajuan', payload);
         this.success = 'Pengajuan berhasil disimpan sebagai draft';
         setTimeout(() => this.$router.push('/pengajuan/' + data.data.id), 1500);
       } catch (err) {
