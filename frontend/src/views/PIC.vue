@@ -62,7 +62,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/pic'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/pic'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     editPic(item) { this.editMode = true; this.editId = item.id; this.form = { nama: item.nama, email: item.email, no_hp: item.no_hp || '', kode_cabang: item.kode_cabang || '', role: item.role || '', zona: item.zona || '' }; this.showModal = true; },
     async savePic() {
       this.submitting = true;

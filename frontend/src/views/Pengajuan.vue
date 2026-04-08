@@ -35,11 +35,11 @@
             <tr v-for="item in items" :key="item.id">
               <td>{{ item.nomor_pengajuan || '-' }}</td>
               <td>{{ item.nama_pemohon }}</td>
-              <td>{{ item.nik }}</td>
+              <td>{{ item.nik_pemohon }}</td>
               <td>{{ item.jenis_pembiayaan }}</td>
               <td>{{ item.prinsip_pembiayaan }}</td>
               <td>{{ formatCurrency(item.nilai_pembiayaan) }}</td>
-              <td><span :class="'badge badge-' + statusClass(item.status)">{{ item.status }}</span></td>
+              <td><span :class="'badge badge-' + statusClass(item.status_pengajuan)">{{ item.status_pengajuan }}</span></td>
               <td>{{ formatDate(item.createdAt) }}</td>
               <td>
                 <router-link :to="'/pengajuan/' + item.id" class="btn btn-outline btn-sm">Detail</router-link>
@@ -77,8 +77,8 @@ export default {
         if (this.search) params.search = this.search;
         if (this.statusFilter) params.status = this.statusFilter;
         const { data } = await api.get('/pengajuan', { params });
-        this.items = data.data?.rows || [];
-        this.totalPages = Math.ceil((data.data?.count || 0) / 20);
+        this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []);
+        this.totalPages = Math.ceil((data.pagination?.total || 0) / 20);
       } catch (err) {
         console.error(err);
       } finally {

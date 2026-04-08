@@ -9,7 +9,7 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">NIK *</label>
-            <input v-model="form.nik" type="text" class="form-control" maxlength="16" required />
+            <input v-model="form.nik_pemohon" type="text" class="form-control" maxlength="16" required />
           </div>
           <div class="form-group">
             <label class="form-label">Nama Pemohon *</label>
@@ -20,28 +20,46 @@
             <input v-model="form.tempat_lahir" type="text" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Tanggal Lahir</label>
-            <input v-model="form.tanggal_lahir" type="date" class="form-control" />
+            <label class="form-label">Tanggal Lahir *</label>
+            <input v-model="form.tanggal_lahir" type="date" class="form-control" required />
           </div>
           <div class="form-group">
-            <label class="form-label">No HP</label>
-            <input v-model="form.no_hp" type="text" class="form-control" />
+            <label class="form-label">Nomor KK *</label>
+            <input v-model="form.nomor_kk" type="text" class="form-control" maxlength="16" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">No HP *</label>
+            <input v-model="form.nomor_hp" type="text" class="form-control" required />
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
             <input v-model="form.email" type="email" class="form-control" />
           </div>
           <div class="form-group">
+            <label class="form-label">NPWP</label>
+            <input v-model="form.npwp" type="text" class="form-control" maxlength="16" />
+          </div>
+          <div class="form-group">
             <label class="form-label">Alamat</label>
             <input v-model="form.alamat" type="text" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Pekerjaan</label>
-            <input v-model="form.pekerjaan" type="text" class="form-control" />
+            <label class="form-label">Pekerjaan *</label>
+            <input v-model="form.pekerjaan" type="text" class="form-control" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Penghasilan</label>
-            <input v-model="form.penghasilan" type="number" class="form-control" />
+            <label class="form-label">Penghasilan *</label>
+            <input v-model="form.penghasilan" type="number" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status Nikah *</label>
+            <select v-model="form.status_nikah" class="form-control" required>
+              <option value="">Pilih</option>
+              <option value="BELUM_KAWIN">Belum Kawin</option>
+              <option value="KAWIN">Kawin</option>
+              <option value="CERAI_HIDUP">Cerai Hidup</option>
+              <option value="CERAI_MATI">Cerai Mati</option>
+            </select>
           </div>
         </div>
       </div>
@@ -67,6 +85,10 @@
             </select>
           </div>
           <div class="form-group">
+            <label class="form-label">Produk *</label>
+            <input v-model="form.produk" type="text" class="form-control" placeholder="cth: KPR Tapera" required />
+          </div>
+          <div class="form-group">
             <label class="form-label">Tipe Program</label>
             <select v-model="form.tipe_program" class="form-control">
               <option value="">Pilih</option>
@@ -84,7 +106,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Suku Bunga (%)</label>
-            <input v-model="form.suku_bunga" type="number" step="0.01" class="form-control" />
+            <input v-model="form.bunga" type="number" step="0.01" class="form-control" />
           </div>
           <div class="form-group">
             <label class="form-label">Uang Muka</label>
@@ -97,32 +119,36 @@
         <h3 class="card-title">Data Properti</h3>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Nama Perumahan</label>
-            <input v-model="form.nama_perumahan" type="text" class="form-control" />
+            <label class="form-label">Alamat Agunan</label>
+            <input v-model="form.alamat_agunan" type="text" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Alamat Properti</label>
-            <input v-model="form.alamat_properti" type="text" class="form-control" />
+            <label class="form-label">Kode Wilayah Agunan</label>
+            <input v-model="form.kode_wilayah_agunan" type="text" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Harga Properti</label>
-            <input v-model="form.harga_properti" type="number" class="form-control" />
+            <label class="form-label">ID Lokasi</label>
+            <input v-model="form.id_lokasi" type="text" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Luas Tanah (m2)</label>
-            <input v-model="form.luas_tanah" type="number" class="form-control" />
+            <label class="form-label">Harga Rumah</label>
+            <input v-model="form.harga_rumah" type="number" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="form-label">Luas Bangunan (m2)</label>
-            <input v-model="form.luas_bangunan" type="number" class="form-control" />
+            <label class="form-label">RT Agunan</label>
+            <input v-model="form.rt_agunan" type="text" class="form-control" maxlength="5" />
           </div>
           <div class="form-group">
-            <label class="form-label">Provinsi</label>
-            <input v-model="form.provinsi" type="text" class="form-control" />
+            <label class="form-label">RW Agunan</label>
+            <input v-model="form.rw_agunan" type="text" class="form-control" maxlength="5" />
           </div>
           <div class="form-group">
-            <label class="form-label">Kota/Kabupaten</label>
-            <input v-model="form.kota" type="text" class="form-control" />
+            <label class="form-label">Blok Agunan</label>
+            <input v-model="form.blok_agunan" type="text" class="form-control" maxlength="10" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nomor Unit Agunan</label>
+            <input v-model="form.nomor_unit_agunan" type="text" class="form-control" maxlength="10" />
           </div>
         </div>
       </div>
@@ -148,12 +174,13 @@ export default {
       error: '',
       success: '',
       form: {
-        nik: '', nama_pemohon: '', tempat_lahir: '', tanggal_lahir: '',
-        no_hp: '', email: '', alamat: '', pekerjaan: '', penghasilan: '',
-        jenis_pembiayaan: '', prinsip_pembiayaan: '', tipe_program: '',
-        nilai_pembiayaan: '', tenor: '', suku_bunga: '', uang_muka: '',
-        nama_perumahan: '', alamat_properti: '', harga_properti: '',
-        luas_tanah: '', luas_bangunan: '', provinsi: '', kota: ''
+        nik_pemohon: '', nama_pemohon: '', tempat_lahir: '', tanggal_lahir: '',
+        nomor_kk: '', nomor_hp: '', email: '', npwp: '', alamat: '',
+        pekerjaan: '', penghasilan: '', status_nikah: '',
+        produk: '', jenis_pembiayaan: '', prinsip_pembiayaan: '', tipe_program: '',
+        nilai_pembiayaan: '', tenor: '', bunga: '', uang_muka: '',
+        alamat_agunan: '', kode_wilayah_agunan: '', id_lokasi: '',
+        harga_rumah: '', rt_agunan: '', rw_agunan: '', blok_agunan: '', nomor_unit_agunan: ''
       }
     };
   },

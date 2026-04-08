@@ -74,7 +74,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/verifikasi'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/verifikasi'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async createVerifikasi() {
       this.submitting = true;
       try { await api.post('/verifikasi/layak-huni', this.form); this.showModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; }

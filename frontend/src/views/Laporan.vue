@@ -78,7 +78,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const params = {}; if (this.jenisFilter) params.jenis_laporan = this.jenisFilter; const { data } = await api.get('/laporan', { params }); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const params = {}; if (this.jenisFilter) params.jenis_laporan = this.jenisFilter; const { data } = await api.get('/laporan', { params }); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async submitOutstanding() { this.submitting = true; try { await api.post('/laporan/outstanding', this.outstandingForm); this.showOutstandingModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     async submitPelunasan() { this.submitting = true; try { await api.post('/laporan/pelunasan', this.pelunasanForm); this.showPelunasanModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     formatCurrency(v) { return v ? 'Rp ' + Number(v).toLocaleString('id-ID') : '-'; },

@@ -45,10 +45,10 @@
             <tr v-for="item in recentList" :key="item.id">
               <td>{{ item.nomor_pengajuan || '-' }}</td>
               <td>{{ item.nama_pemohon }}</td>
-              <td>{{ item.nik }}</td>
+              <td>{{ item.nik_pemohon }}</td>
               <td>{{ item.jenis_pembiayaan }}</td>
               <td>{{ formatCurrency(item.nilai_pembiayaan) }}</td>
-              <td><span :class="'badge badge-' + statusClass(item.status)">{{ item.status }}</span></td>
+              <td><span :class="'badge badge-' + statusClass(item.status_pengajuan)">{{ item.status_pengajuan }}</span></td>
               <td>{{ formatDate(item.createdAt) }}</td>
             </tr>
             <tr v-if="recentList.length === 0">
@@ -83,7 +83,7 @@ export default {
           api.get('/pengajuan?limit=10')
         ]);
         this.stats = statsRes.data.data || {};
-        this.recentList = listRes.data.data?.rows || [];
+        this.recentList = Array.isArray(listRes.data.data) ? listRes.data.data : (listRes.data.data?.rows || []);
       } catch (err) {
         console.error('Failed to load dashboard:', err);
       }
