@@ -66,7 +66,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/efek'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/efek'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async createEfek() { this.submitting = true; try { await api.post('/efek', this.form); this.showModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     formatCurrency(v) { return v ? 'Rp ' + Number(v).toLocaleString('id-ID') : '-'; },
     formatDate(v) { return v ? new Date(v).toLocaleDateString('id-ID') : '-'; }

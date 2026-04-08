@@ -67,7 +67,7 @@ export default {
   methods: {
     async loadData() {
       this.loading = true;
-      try { const { data } = await api.get('/sp3k'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; }
+      try { const { data } = await api.get('/sp3k'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; }
     },
     async createSP3K() {
       this.submitting = true;

@@ -3,19 +3,19 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-label">Total Pengajuan</div>
-        <div class="stat-value">{{ stats.total || 0 }}</div>
+        <div class="stat-value">{{ stats.total_pengajuan || 0 }}</div>
       </div>
       <div class="stat-card warning">
-        <div class="stat-label">Menunggu Review</div>
-        <div class="stat-value">{{ stats.pending || 0 }}</div>
+        <div class="stat-label">Draft</div>
+        <div class="stat-value">{{ stats.draft || 0 }}</div>
       </div>
       <div class="stat-card success">
         <div class="stat-label">Disetujui</div>
         <div class="stat-value">{{ stats.approved || 0 }}</div>
       </div>
       <div class="stat-card info">
-        <div class="stat-label">Sudah Akad</div>
-        <div class="stat-value">{{ stats.akad || 0 }}</div>
+        <div class="stat-label">Submitted</div>
+        <div class="stat-value">{{ stats.submitted || 0 }}</div>
       </div>
       <div class="stat-card danger">
         <div class="stat-label">Ditolak</div>
@@ -45,10 +45,10 @@
             <tr v-for="item in recentList" :key="item.id">
               <td>{{ item.nomor_pengajuan || '-' }}</td>
               <td>{{ item.nama_pemohon }}</td>
-              <td>{{ item.nik }}</td>
+              <td>{{ item.nik_pemohon }}</td>
               <td>{{ item.jenis_pembiayaan }}</td>
               <td>{{ formatCurrency(item.nilai_pembiayaan) }}</td>
-              <td><span :class="'badge badge-' + statusClass(item.status)">{{ item.status }}</span></td>
+              <td><span :class="'badge badge-' + statusClass(item.status_pengajuan)">{{ item.status_pengajuan }}</span></td>
               <td>{{ formatDate(item.createdAt) }}</td>
             </tr>
             <tr v-if="recentList.length === 0">
@@ -83,7 +83,7 @@ export default {
           api.get('/pengajuan?limit=10')
         ]);
         this.stats = statsRes.data.data || {};
-        this.recentList = listRes.data.data?.rows || [];
+        this.recentList = Array.isArray(listRes.data.data) ? listRes.data.data : (listRes.data.data?.rows || []);
       } catch (err) {
         console.error('Failed to load dashboard:', err);
       }

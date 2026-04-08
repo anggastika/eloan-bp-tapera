@@ -66,7 +66,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/prioritas'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/prioritas'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async createPrioritas() { this.submitting = true; try { await api.post('/prioritas', this.form); this.showModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     async submitToTapera(item) { try { await api.post('/prioritas/submit', { id: item.id }); await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } },
     async cekPrioritas(item) { try { const { data } = await api.get('/prioritas/cek', { params: { nik: item.nik } }); this.cekResult = data.data; } catch(e) { alert(e.response?.data?.message || 'Gagal'); } },

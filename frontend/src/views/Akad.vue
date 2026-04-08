@@ -57,7 +57,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/akad'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/akad'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async createAkad() { this.submitting = true; try { await api.post('/akad', this.form); this.showModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     async submitAkad(item) { try { await api.post('/akad/submit', { id: item.id }); await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } },
     formatDate(v) { return v ? new Date(v).toLocaleDateString('id-ID') : '-'; }

@@ -68,7 +68,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const params = {}; if (this.tipeFilter) params.tipe_program = this.tipeFilter; const { data } = await api.get('/pencairan', { params }); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const params = {}; if (this.tipeFilter) params.tipe_program = this.tipeFilter; const { data } = await api.get('/pencairan', { params }); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     async createPencairan() { this.submitting = true; try { await api.post('/pencairan', this.form); this.showModal = false; await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } finally { this.submitting = false; } },
     async submitPencairan(item) { try { await api.post('/pencairan/submit', { id: item.id }); await this.loadData(); } catch(e) { alert(e.response?.data?.message || 'Gagal'); } },
     formatCurrency(v) { return v ? 'Rp ' + Number(v).toLocaleString('id-ID') : '-'; },

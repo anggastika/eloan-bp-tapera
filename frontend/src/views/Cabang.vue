@@ -56,7 +56,7 @@ export default {
   },
   created() { this.loadData(); },
   methods: {
-    async loadData() { this.loading = true; try { const { data } = await api.get('/branch'); this.items = data.data?.rows || []; } catch(e) { console.error(e); } finally { this.loading = false; } },
+    async loadData() { this.loading = true; try { const { data } = await api.get('/branch'); this.items = Array.isArray(data.data) ? data.data : (data.data?.rows || []); } catch(e) { console.error(e); } finally { this.loading = false; } },
     editBranch(item) { this.editMode = true; this.editId = item.id; this.form = { kode_cabang: item.kode_cabang, nama_cabang: item.nama_cabang, alamat: item.alamat || '', kota: item.kota || '', provinsi: item.provinsi || '' }; this.showModal = true; },
     async saveBranch() {
       this.submitting = true;
