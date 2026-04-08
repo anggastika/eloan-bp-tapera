@@ -3,19 +3,19 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-label">Total Pengajuan</div>
-        <div class="stat-value">{{ stats.total || 0 }}</div>
+        <div class="stat-value">{{ stats.total_pengajuan || 0 }}</div>
       </div>
       <div class="stat-card warning">
-        <div class="stat-label">Menunggu Review</div>
-        <div class="stat-value">{{ stats.pending || 0 }}</div>
+        <div class="stat-label">Draft</div>
+        <div class="stat-value">{{ stats.draft || 0 }}</div>
       </div>
       <div class="stat-card success">
         <div class="stat-label">Disetujui</div>
         <div class="stat-value">{{ stats.approved || 0 }}</div>
       </div>
       <div class="stat-card info">
-        <div class="stat-label">Sudah Akad</div>
-        <div class="stat-value">{{ stats.akad || 0 }}</div>
+        <div class="stat-label">Submitted</div>
+        <div class="stat-value">{{ stats.submitted || 0 }}</div>
       </div>
       <div class="stat-card danger">
         <div class="stat-label">Ditolak</div>
